@@ -86,6 +86,12 @@
 
       <!--main-->
       <el-main>
+        <div style="margin-bottom: 20px">
+          <el-breadcrumb separator="/">
+            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
 
         <div style="margin: 10px 0">
           <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入名称"></el-input>
