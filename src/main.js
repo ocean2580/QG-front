@@ -4,6 +4,8 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/global.css'
+import request from "@/utils/request";
+
 /**
  * 用于引入文件
  */
@@ -11,6 +13,9 @@ import './assets/global.css'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI,{size: "mini"});
+
+// TODO
+Vue.prototype.request = request
 
 new Vue({
   router,

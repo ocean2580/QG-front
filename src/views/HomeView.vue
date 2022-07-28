@@ -96,13 +96,16 @@
         <div style="margin: 10px 0">
           <!--    绑定输入框实现模糊搜索      -->
           <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入名称" v-model="username"></el-input>
-          <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="请输入邮箱" class="ml-5"></el-input>
-          <el-input style="width: 200px" suffix-icon="el-icon-position" placeholder="请输入地址" class="ml-5"></el-input>
+          <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="请输入邮箱" class="ml-5"
+                    v-model="email"></el-input>
+          <el-input style="width: 200px" suffix-icon="el-icon-position" placeholder="请输入地址" class="ml-5"
+                    v-model="address"></el-input>
           <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
+          <el-button type="warning" @click="reset">重置</el-button>
         </div>
 
         <div>
-          <el-button type="primary">新增<i class="el-icon-circle-plus-outline" style="margin-left: 1px"></i></el-button>
+          <el-button type="primary" @click="handleAdd">新增<i class="el-icon-circle-plus-outline" style="margin-left: 1px"></i></el-button>
           <el-button type="danger">批量删除<i class="el-icon-remove-outline" style="margin-left: 1px"></i></el-button>
           <el-button type="primary">导入<i class="el-icon-bottom"></i></el-button>
           <el-button type="primary">导出<i class="el-icon-top"></i></el-button>
@@ -116,8 +119,8 @@
           <el-table-column prop="phone" label="电话"></el-table-column>
           <el-table-column prop="address" label="地址"></el-table-column>
           <el-table-column label="操作">
-            <template slot-scope="{}">
-              <el-button type="success">编辑 <i class="el-icon-edit"></i></el-button>
+            <template slot-scope="scope">
+              <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
               <el-button type="danger">删除 <i class="el-icon-delete"></i></el-button>
             </template>
           </el-table-column>
@@ -135,6 +138,31 @@
           </el-pagination>
         </div>
 
+        <!--        dialog -->
+        <el-dialog title="收货地址" :visible.sync="dialogFormVisible" width="30%">
+          <el-form label-width="80px" size="small">
+            <el-form-item label="用户名">
+              <el-input v-model="form.username" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="昵称">
+              <el-input v-model="form.nickname" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <el-input v-model="form.email" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="电话">
+              <el-input v-model="form.phone" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="地址">
+              <el-input v-model="form.address" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary"  @click="save">确 定</el-button>
+          </div>
+        </el-dialog>
+
       </el-main>
 
     </el-container>
@@ -146,6 +174,8 @@
 <script>
 
 
+import request from "@/utils/request";
+
 export default {
   name: 'HomeView',
   data() {
@@ -155,17 +185,27 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 1,
+
       username: "",
+      address: "",
+      email: "",
+      data: "",
+
       collapseBtnClass: 'el-icon-s-fold',
       isCollapse: false,
       sideWidth: 200,
       logoTextShow: true,
-      headerBg: 'headerBg'
+      headerBg: 'headerBg',
+
+      dialogFormVisible: false,
+      form: {},
     }
   },
+
   created() {
     this.load();
   },
+
   methods: {
     collapse() {  // 点击触发收缩
       this.isCollapse = !this.isCollapse;
@@ -179,11 +219,48 @@ export default {
         this.logoTextShow = true;
       }
     },
-    // 请求封装成方法
-    load() {
-      fetch("http://localhost:9090/user/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize + "&username=" + this.username).then(res => res.json()).then(res => {
+    reset() {
+      this.username = "";
+      this.email = "";
+      this.address = "";
+      this.load();
+    },
+
+    // 增删查改
+    save() {
+      request.post("/user", this.form).then(res => {
+        if (res) {
+          this.$message.success("succeed to save");
+          this.dialogFormVisible = false;
+          this.load();
+        }
+        else {
+          this.$message.error("fail to save");
+        }
+      })
+    },
+    handleAdd() {
+      this.dialogFormVisible= true;
+      this.form = {}
+    },
+    handleEdit(row) {
+      this.form = row
+      this.dialogFormVisible = true
+
+    },
+
+    load() {    // 请求封装成方法
+      request.get("/user/page", {
+        params: {
+          pageNum: this.pageNum,
+          pageSize: this.pageSize,
+          username: this.username,
+          email: this.email,
+          address: this.address,
+        }
+      }).then(res => {
         console.log(res);
-        this.tableData = res.data;
+        this.tableData = res.records
         this.total = res.total;
       })
     },
@@ -194,7 +271,7 @@ export default {
     handleCurrentChange(pageNum) {
       this.pageNum = pageNum;
       this.load();
-    }
+    },
   }
 
 }
