@@ -13,7 +13,10 @@ const routes = [
         // 子页面
         children: [
             {path: 'user', name: '用户管理', component: () => import('../views/User.vue')},
-            {path: 'home', name: '首页', component: () => import('../views/Home.vue')},]
+            {path: 'home', name: '首页', component: () => import('../views/Home.vue')},
+            {path: '/person', name: '个人信息', component: () => import('../views/Person.vue')
+            }
+        ]
     },
     {
         path: '/about',
@@ -24,7 +27,13 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: () => import('../views/Login.vue')
-    }
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: () => import('../views/Register.vue')
+    },
+
 ]
 
 const router = new VueRouter({
@@ -34,7 +43,7 @@ const router = new VueRouter({
 })
 
 // 路由守卫
-router.beforeEach((to , from, next )=>{
+router.beforeEach((to, from, next) => {
     localStorage.setItem("currentPathName", to.name)
     store.commit("setPath")
     next()

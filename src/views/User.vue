@@ -140,7 +140,7 @@ export default {
     // 增删查改
     save() {
       this.request.post("/user", this.form).then(res => {
-        if (res) {
+        if (res.data) {
           this.$message.success("succeed to save");
           this.dialogFormVisible = false;
           this.load();
@@ -159,7 +159,7 @@ export default {
     },
     del(id) {
       this.request.delete("/user/" + id).then(res => {
-        if (res) {
+        if (res.data) {
           this.$message.success("succeed to delete");
           this.load();
         } else {
@@ -173,7 +173,7 @@ export default {
     delBatch() {
       let ids = this.multipleSelection.map(v => v.id);
       this.request.post("/user/del/batch", ids).then(res => {
-        if (res) {
+        if (res.data) {
           this.$message.success("succeed to delete");
           this.load();
         } else {
@@ -193,8 +193,8 @@ export default {
         }
       }).then(res => {
         console.log(res);
-        this.tableData = res.records
-        this.total = res.total;
+        this.tableData = res.data.records
+        this.total = res.data.total;
       })
     },
     handleSizeChange(pageSize) {

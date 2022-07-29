@@ -49,7 +49,9 @@
             "Aside",
             "Header",
             "User",
-            "Home"
+            "Home",
+            "Register",
+            "Person"
           ]
         }
       ]
