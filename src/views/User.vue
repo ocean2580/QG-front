@@ -1,11 +1,5 @@
 <template>
   <div>
-    <div style="margin-bottom: 20px">
-      <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-      </el-breadcrumb>
-    </div>
 
     <div style="margin: 10px 0">
       <!--    绑定输入框实现模糊搜索      -->
@@ -155,8 +149,8 @@ export default {
       this.form = {}
     },
     handleEdit(row) {
-      this.form = row
-      this.dialogFormVisible = true
+      this.form = JSON.parse(JSON.stringify(row));
+      this.dialogFormVisible = true;
     },
     del(id) {
       this.request.delete("/user/" + id).then(res => {
