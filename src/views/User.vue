@@ -29,8 +29,13 @@
                                                          style="margin-left: 1px"></i></el-button>
       </el-popconfirm>
 
-      <el-button type="primary" class="ml-5">导入<i class="el-icon-bottom"></i></el-button>
-      <el-button type="primary">导出<i class="el-icon-top"></i></el-button>
+      <el-upload action="http://localhost:9090/user/import" :show-file-list="false"
+                 accept="xlsx" style="display: inline-block"
+                 :on-success="handleExcelImportSuccess"
+      >
+        <el-button type="primary" class="ml-5">导入<i class="el-icon-bottom"></i></el-button>
+      </el-upload>
+      <el-button type="primary" @click="exp" class="ml-5">导出<i class="el-icon-top"></i></el-button>
     </div>
 
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"
@@ -200,6 +205,15 @@ export default {
       this.pageNum = pageNum;
       this.load();
     },
+
+    // 导出
+    exp() {
+      window.open("http://localhost:9090/user/export");
+    },
+    handleExcelImportSuccess() {
+      this.$message.success("succeed to import");
+      this.load();
+    }
   }
 }
 </script>
