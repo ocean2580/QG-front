@@ -6,6 +6,7 @@
           action="http://localhost:9090/file/upload"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
+          style="width: 150px; margin-left: 150px"
       >
         <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -56,12 +57,8 @@ export default {
         if (res.data) {
           this.$message.success("succeed to save");
 
-          // 更新浏览器存储的信息
-          this.getUser().then(res => {
-            res.token = JSON.parse(localStorage.getItem("user")).token;
-            localStorage.setItem("user", JSON.stringify(res));
-          })
-          this.load()
+          // 1.触发父级更新User
+          this.$emit("refreshUser")
 
         } else {
           this.$message.error("fail to save");

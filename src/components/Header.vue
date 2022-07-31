@@ -35,10 +35,10 @@ export default {
   props: {
     collapseBtnClass: String,
     pathName: String,
+    user: Object
   },
   data() {
     return {
-      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {},
     }
   },
   methods: {

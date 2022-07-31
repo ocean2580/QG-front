@@ -11,14 +11,14 @@
 
       <!--header-->
       <el-header style=" border-bottom: 1px solid #ccc;">
-
-        <Header :collapseBtnClass="collapseBtnClass" @asideCollapse="collapse"/>
+        <!--   3.传user     -->
+        <Header :collapseBtnClass="collapseBtnClass" @asideCollapse="collapse" :user="user"/>
       </el-header>
 
       <!--main-->
       <el-main>
         <!--   当前页面的子路由会在 router-view中展示     -->
-        <router-view/>
+        <router-view @refreshUser="getUser"/>
       </el-main>
 
     </el-container>
@@ -38,18 +38,23 @@ import Header from "@/components/Header"
 export default {
   name: 'Manage',
   data() {
-
     return {
       collapseBtnClass: 'el-icon-s-fold',
       isCollapse: false,
       sideWidth: 200,
       logoTextShow: true,
+      user: {},
+
     }
   },
 
   components: {
     Header,
     Aside
+  },
+  created() {
+
+    this.getUser()
   },
   methods: {
     collapse() {  // 点击触发收缩
@@ -64,6 +69,13 @@ export default {
         this.logoTextShow = true;
       }
     },
+    getUser() {
+      // 2.后台获取User数据
+      let username = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : ""
+      this.request.get("/user/username/" + username).then(res => {
+        this.user = res.data
+      })
+    }
 
   }
 
