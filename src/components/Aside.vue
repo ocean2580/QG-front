@@ -22,7 +22,7 @@
 
     <el-submenu index="2">
       <template slot="title">
-        <i class="el-icon-menu"></i>
+        <i class="el-icon-s-grid"></i>
         <span slot="title">系统管理</span>
       </template>
 
