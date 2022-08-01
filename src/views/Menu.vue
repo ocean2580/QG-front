@@ -26,16 +26,19 @@
       </el-popconfirm>
     </div>
 
+    <!--  table  -->
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"
-              @selection-change="handleSelectionChange">
+              @selection-change="handleSelectionChange" row-key="id" default-expand-all>
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="path" label="路径"></el-table-column>
       <el-table-column prop="icon" label="图标"></el-table-column>
       <el-table-column prop="description" label="描述"></el-table-column>
-      <el-table-column label="操作" width="200" align="center">
+      <el-table-column label="操作" width="300" align="center">
+
         <template slot-scope="scope">
+          <el-button type="primary" @click="handleAdd(scope.row.id)" v-if="!scope.row.pid && !scope.row.path">新增子菜单 <i class="el-icon-plus"></i></el-button>
           <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
 
           <el-popconfirm
@@ -54,17 +57,6 @@
       </el-table-column>
     </el-table>
 
-    <div style="padding: 10px 0">
-      <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="pageNum"
-          :page-sizes="[2, 5, 10, 20]"
-          :page-size="pageSize"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total">
-      </el-pagination>
-    </div>
 
     <!--        dialog -->
     <el-dialog title="菜单信息" :visible.sync="dialogFormVisible" width="30%">
@@ -82,6 +74,7 @@
           <el-input v-model="form.description" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
+
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
         <el-button type="primary" @click="save">确 定</el-button>
@@ -104,7 +97,7 @@ export default {
 
       dialogFormVisible: false,
       form: {},
-      multipleSelection: [],
+      multipleSelection: []
 
     }
   },
@@ -129,9 +122,12 @@ export default {
         }
       })
     },
-    handleAdd() {
+    handleAdd(pid) {
       this.dialogFormVisible = true;
       this.form = {}
+      if (pid) {
+        this.form.pid = pid
+      }
     },
     handleEdit(row) {
       this.form = JSON.parse(JSON.stringify(row));
@@ -163,17 +159,13 @@ export default {
     },
 
     load() {    // 请求封装成方法
-      this.request.get("/menu/page", {
+      this.request.get("/menu", {
         params: {
-          pageNum: this.pageNum,
-          pageSize: this.pageSize,
-          name: this.name,
-
+          name: this.name
         }
       }).then(res => {
         console.log(res);
-        this.tableData = res.data.records
-        this.total = res.data.total;
+        this.tableData = res.data;
       })
     },
     handleSizeChange(pageSize) {
@@ -183,6 +175,9 @@ export default {
     handleCurrentChange(pageNum) {
       this.pageNum = pageNum;
       this.load();
+    },
+    addChildren() {
+
     },
 
   }

@@ -12,8 +12,8 @@ const routes = [
         component: () => import('../views/Manage.vue'),
         // 子页面
         children: [
-            {path: 'user', name: '用户管理', component: () => import('../views/User.vue')},
-            {path: 'home', name: '首页', component: () => import('../views/Home.vue')},
+            {path: '/user', name: '用户管理', component: () => import('../views/User.vue')},
+            {path: '/home', name: '首页', component: () => import('../views/Home.vue')},
             {path: '/person', name: '个人信息', component: () => import('../views/Person.vue')},
             {path: '/file', name: '文件管理', component: () => import('../views/Files.vue')},
             {path: '/role', name: '角色管理', component: () => import('../views/Role.vue')},
