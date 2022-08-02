@@ -33,6 +33,7 @@
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="path" label="路径"></el-table-column>
+      <el-table-column prop="pagePath" label="页面路径"></el-table-column>
       <el-table-column label="图标" class-name="fontSize18" align="center" label-class-name="fontSize12">
         <template slot-scope="scope">
           <i :class="scope.row.icon"/>
@@ -72,6 +73,9 @@
         </el-form-item>
         <el-form-item label="路径">
           <el-input v-model="form.path" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="页面路径">
+          <el-input v-model="form.pagePath" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="图标">
           <!--    下拉框      -->

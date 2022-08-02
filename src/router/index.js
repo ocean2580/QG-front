@@ -5,21 +5,7 @@ import store from "@/store"
 Vue.use(VueRouter)
 
 const routes = [
-    {
-        path: '/',
-        name: 'Manage',
-        redirect: "/home",
-        component: () => import('../views/Manage.vue'),
-        // 子页面
-        children: [
-            {path: '/user', name: '用户管理', component: () => import('../views/User.vue')},
-            {path: '/home', name: '首页', component: () => import('../views/Home.vue')},
-            {path: '/person', name: '个人信息', component: () => import('../views/Person.vue')},
-            {path: '/file', name: '文件管理', component: () => import('../views/Files.vue')},
-            {path: '/role', name: '角色管理', component: () => import('../views/Role.vue')},
-            {path: '/menu', name: '菜单管理', component: () => import('../views/Menu.vue')},
-        ]
-    },
+
     {
         path: '/about',
         name: 'About',
@@ -43,6 +29,50 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
+
+export const setRoutes = () => {
+    const storeMenus = localStorage.getItem("menus");
+    if (storeMenus) {
+        // 动态拼装路由
+        const manageRoute = {
+            path: '/',
+            name: 'Manage',
+            redirect: "/home",
+            component: () => import('../views/Manage.vue'),
+            children: []
+        }
+        const menus = JSON.parse(storeMenus)
+        menus.forEach(item => {
+            if (item.path) {
+                let itemMenu = {
+                    path: item.path.replace("/", ""),
+                    name: item.name,
+                    component: () => import('../views/' + item.pagePath + '.vue')
+                }
+                manageRoute.children.push(itemMenu)
+            } else if (item.children.length) {
+                item.children.forEach(item => {
+                    if (item.path) {
+                        let itemMenu = {
+                            path: item.path.replace("/", ""),
+                            name: item.name,
+                            component: () => import('../views/' + item.pagePath + '.vue')
+                        }
+                        manageRoute.children.push(itemMenu)
+                    }
+                })
+            }
+        })
+
+        const currentRouteNames = router.getRoutes().map(v => v.name)
+        if (!currentRouteNames.includes('Manage')) {
+            // 动态添加
+            router.addRoute(manageRoute)
+        }
+
+    }
+}
+
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
