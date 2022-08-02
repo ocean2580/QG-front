@@ -44,7 +44,9 @@ export const setRoutes = () => {
             name: 'Manage',
             redirect: "/home",
             component: () => import('../views/Manage.vue'),
-            children: []
+            children: [{path: 'person', name: '个人信息', component: ()=> import('../views/Person.vue')},
+                // {path: 'password', name: '修改密码', componet: ()=> import('../views/Password.vue')},
+            ]
         }
         const menus = JSON.parse(storeMenus)
         menus.forEach(item => {
@@ -79,11 +81,28 @@ export const setRoutes = () => {
 }
 
 
+// 重置我就再set一次路由
+setRoutes()
+
 // 路由守卫
 router.beforeEach((to, from, next) => {
-    localStorage.setItem("currentPathName", to.name)
+    localStorage.setItem("currentPathName", to.name)  // 设置当前的路由名称
     store.commit("setPath")
+
+    // 未找到路由的情况
+    if (!to.matched.length) {
+        const storeMenus = localStorage.getItem("menus")
+        if (storeMenus) {
+            next("/404")
+        } else {
+            // 跳回登录页面
+            next("/login")
+        }
+    }
+    // 其他的情况都放行
     next()
+
 })
+
 
 export default router
