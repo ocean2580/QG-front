@@ -123,7 +123,7 @@ export default {
       checks: [],
       roleId: 0,
       roleFlag: '',
-      ids: []
+      // ids: []
     }
   },
   created() {
@@ -223,7 +223,7 @@ export default {
     },
     async selectMenu(role) {
       this.roleId = role.id
-      // this.roleFlag = role.flag
+      this.roleFlag = role.flag
 
       // 请求菜单数据
       this.request.get("/menu").then(res => {
@@ -235,13 +235,14 @@ export default {
 
       this.request.get("/role/roleMenu/" + this.roleId).then(res => {
         this.checks = res.data
-        this.ids.forEach(id => {
-          if (!this.checks.includes(id)) {
-            // 可能会报错：Uncaught (in promise) TypeError: Cannot read properties of undefined (reading 'setChecked')
-            this.$nextTick(() => {
-              this.$refs.tree.setChecked(id, false)
-            })
-          }
+
+        this.request.get("/menu/ids").then(r => {
+          const ids = r.data
+          ids.forEach(id => {
+            if (!this.checks.includes(id)) {
+              this.$refs.tree.setChecked(id,false)
+            }
+          })
         })
         this.menuDialogVis = true
       })
