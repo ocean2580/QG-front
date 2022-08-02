@@ -21,6 +21,7 @@
       </el-popconfirm>
     </div>
 
+    <!--  table  -->
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
@@ -58,6 +59,7 @@
       </el-pagination>
     </div>
 
+    <!--  dialog  -->
     <el-dialog title="角色信息" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
         <el-form-item label="名称">
@@ -86,7 +88,7 @@
           ref="tree"
           :default-expanded-keys="expends"
           :default-checked-keys="checks">
-         <span class="custom-tree-node" slot-scope="{ node, data }">
+         <span class="custom-tree-node" slot-scope="{  data }">
             <span><i :class="data.icon"></i> {{ data.name }}</span>
          </span>
       </el-tree>

@@ -38,11 +38,13 @@
       <el-button type="primary" @click="exp" class="ml-5">导出<i class="el-icon-top"></i></el-button>
     </div>
 
+    <!-- table  -->
     <el-table :data="tableData" border stripe :header-cell-class-name="'headerBg'"
-              @selection-change="handleSelectionChange">
+                   @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="40"></el-table-column>
       <el-table-column prop="username" label="用户名" width="140"></el-table-column>
+      <el-table-column prop="role" label="角色"></el-table-column>
       <el-table-column prop="nickname" label="昵称" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
       <el-table-column prop="phone" label="电话"></el-table-column>
@@ -85,6 +87,13 @@
         <el-form-item label="用户名">
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="角色">
+          <!--    下拉框      -->
+          <el-select clearable v-model="form.role" placeholder="role" style="width: 100%">
+            <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag">
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="昵称">
           <el-input v-model="form.nickname" autocomplete="off"></el-input>
         </el-form-item>
@@ -123,6 +132,7 @@ export default {
       dialogFormVisible: false,
       form: {},
       multipleSelection: [],
+      roles: []
 
     }
   },
@@ -195,6 +205,10 @@ export default {
         console.log(res);
         this.tableData = res.data.records
         this.total = res.data.total;
+      })
+
+      this.request.get("/role").then(res => {
+        this.roles = res.data
       })
     },
     handleSizeChange(pageSize) {
