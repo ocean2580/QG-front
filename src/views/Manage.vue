@@ -4,7 +4,7 @@
     <!--aside-->
     <el-aside :width="sideWidth + 'px'"
               style="background-color: rgb(238, 241, 246); height: 100%; box-shadow: 2px 0 6px rgb(0 21 41 / 35%);">
-      <Aside :isCollapse="isCollapse" :logoTextShow="logoTextShow"/>
+      <Aside :isCollapse="isCollapse" :logoTextShow="logoTextShow" />
     </el-aside>
 
     <el-container>
@@ -74,6 +74,7 @@ export default {
       let username = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).username : ""
       this.request.get("/user/username/" + username).then(res => {
         this.user = res.data
+        console.log(this.user.menu)
       })
     }
 
