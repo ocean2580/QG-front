@@ -38,45 +38,46 @@ const router = new VueRouter({
 export const setRoutes = () => {
     const storeMenus = localStorage.getItem("menus");
     if (storeMenus) {
-        // 动态拼装路由
-        const manageRoute = {
-            path: '/',
-            name: 'Manage',
-            redirect: "/home",
-            component: () => import('../views/Manage.vue'),
-            children: [{path: 'person', name: '个人信息', component: ()=> import('../views/Person.vue')},
-                // {path: 'password', name: '修改密码', componet: ()=> import('../views/Password.vue')},
-            ]
-        }
-        const menus = JSON.parse(storeMenus)
-        menus.forEach(item => {
-            if (item.path) {
-                let itemMenu = {
-                    path: item.path.replace("/", ""),
-                    name: item.name,
-                    component: () => import('../views/' + item.pagePath + '.vue')
-                }
-                manageRoute.children.push(itemMenu)
-            } else if (item.children.length) {
-                item.children.forEach(item => {
-                    if (item.path) {
-                        let itemMenu = {
-                            path: item.path.replace("/", ""),
-                            name: item.name,
-                            component: () => import('../views/' + item.pagePath + '.vue')
-                        }
-                        manageRoute.children.push(itemMenu)
-                    }
-                })
-            }
-        })
 
         const currentRouteNames = router.getRoutes().map(v => v.name)
         if (!currentRouteNames.includes('Manage')) {
+
+            // 动态拼装路由
+            const manageRoute = {
+                path: '/',
+                name: 'Manage',
+                redirect: "/home",
+                component: () => import('../views/Manage.vue'),
+                children: [{path: 'person', name: '个人信息', component: ()=> import('../views/Person.vue')},
+                    // {path: 'password', name: '修改密码', componet: ()=> import('../views/Password.vue')},
+                ]
+            }
+            const menus = JSON.parse(storeMenus)
+            menus.forEach(item => {
+                if (item.path) {
+                    let itemMenu = {
+                        path: item.path.replace("/", ""),
+                        name: item.name,
+                        component: () => import('../views/' + item.pagePath + '.vue')
+                    }
+                    manageRoute.children.push(itemMenu)
+                } else if (item.children.length) {
+                    item.children.forEach(item => {
+                        if (item.path) {
+                            let itemMenu = {
+                                path: item.path.replace("/", ""),
+                                name: item.name,
+                                component: () => import('../views/' + item.pagePath + '.vue')
+                            }
+                            manageRoute.children.push(itemMenu)
+                        }
+                    })
+                }
+            })
+
             // 动态添加
             router.addRoute(manageRoute)
         }
-
     }
 }
 
