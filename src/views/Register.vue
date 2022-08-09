@@ -48,12 +48,12 @@ export default {
       this.$refs['userForm'].validate((valid) => {
         if (valid) {  // 表单校验合法
           if (this.user.password !== this.user.confirmPassword) {
-            this.$message.error("两次输入的密码不一致")
+            this.$message.error("The passwords entered twice are inconsistent!")
             return false
           }
           this.request.post("/user/register", this.user).then(res => {
             if(res.code === '200') {
-              this.$message.success("注册成功")
+              this.$message.success("succeed to register")
             } else {
               this.$message.error(res.msg)
             }
