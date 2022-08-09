@@ -43,7 +43,7 @@
                    @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="40"></el-table-column>
-      <el-table-column prop="username" label="用户名" width="140"></el-table-column>
+      <el-table-column prop="username" label="开发者" width="140"></el-table-column>
       <el-table-column prop="role" label="角色"></el-table-column>
       <el-table-column prop="nickname" label="昵称" width="120"></el-table-column>
       <el-table-column prop="email" label="邮箱"></el-table-column>
@@ -84,7 +84,7 @@
     <!--        dialog -->
     <el-dialog title="收货地址" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
-        <el-form-item label="用户名">
+        <el-form-item label="开发者">
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="角色">
@@ -117,13 +117,13 @@
 
 <script>
 export default {
-  name: "User",
+  name: "Developer",
   data() {
     return {
       tableData: [],
       total: 0,
       pageNum: 1,
-      pageSize: 2,
+      pageSize: 10,
 
       username: "",
       address: "",
