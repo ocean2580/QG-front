@@ -3,11 +3,9 @@
 
     <div style="margin: 10px 0">
       <!--    绑定输入框实现模糊搜索      -->
-      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入名称" v-model="username"></el-input>
-      <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="请输入邮箱" class="ml-5"
-                v-model="email"></el-input>
-      <el-input style="width: 200px" suffix-icon="el-icon-position" placeholder="请输入地址" class="ml-5"
-                v-model="address"></el-input>
+      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入名称" v-model="studentName"></el-input>
+      <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="请输入学院" class="ml-5"
+                v-model="institute"></el-input>
       <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
       <el-button type="warning" @click="reset">重置</el-button>
     </div>
@@ -29,13 +27,7 @@
                                                          style="margin-left: 1px"></i></el-button>
       </el-popconfirm>
 
-      <el-upload action="http://localhost:9090/user/import" :show-file-list="false"
-                 accept="xlsx" style="display: inline-block"
-                 :on-success="handleExcelImportSuccess"
-      >
-        <el-button type="primary" class="ml-5">导入<i class="el-icon-bottom"></i></el-button>
-      </el-upload>
-      <el-button type="primary" @click="exp" class="ml-5">导出<i class="el-icon-top"></i></el-button>
+
     </div>
 
     <!-- table  -->
@@ -43,12 +35,10 @@
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="40"></el-table-column>
-      <el-table-column prop="username" label="用户名" width="140"></el-table-column>
-      <el-table-column prop="role" label="角色"></el-table-column>
-      <el-table-column prop="nickname" label="昵称" width="120"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column prop="phone" label="电话"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
+      <el-table-column prop="studentName" label="学生名" width="140"></el-table-column>
+      <el-table-column prop="institute" label="学院"></el-table-column>
+      <el-table-column prop="grade" label="年级" width="120"></el-table-column>
+      <el-table-column prop="studentClass" label="班级"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
@@ -85,27 +75,18 @@
     <el-dialog title="收货地址" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
         <el-form-item label="用户名">
-          <el-input v-model="form.username" autocomplete="off"></el-input>
+          <el-input v-model="form.studentName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="角色">
-          <!--    下拉框      -->
-          <el-select clearable v-model="form.role" placeholder="role" style="width: 100%">
-            <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag">
-            </el-option>
-          </el-select>
+        <el-form-item label="学院">
+          <el-input v-model="form.institute" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="昵称">
-          <el-input v-model="form.nickname" autocomplete="off"></el-input>
+        <el-form-item label="年级">
+          <el-input v-model="form.grade" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="form.email" autocomplete="off"></el-input>
+        <el-form-item label="班级">
+          <el-input v-model="form.studentClass" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="电话">
-          <el-input v-model="form.phone" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input v-model="form.address" autocomplete="off"></el-input>
-        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -125,9 +106,9 @@ export default {
       pageNum: 1,
       pageSize: 2,
 
-      username: "",
-      address: "",
-      email: "",
+      studentName: "",
+      institute: "",
+
 
       dialogFormVisible: false,
       form: {},
@@ -141,15 +122,14 @@ export default {
   },
   methods: {
     reset() {
-      this.username = "";
-      this.email = "";
-      this.address = "";
+      this.studentName = "";
+      this.institute = "";
       this.load();
     },
 
     // 增删查改
     save() {
-      this.request.post("/user", this.form).then(res => {
+      this.request.post("/student", this.form).then(res => {
         if (res.data) {
           this.$message.success("succeed to save");
           this.dialogFormVisible = false;
@@ -168,7 +148,7 @@ export default {
       this.dialogFormVisible = true;
     },
     del(id) {
-      this.request.delete("/user/" + id).then(res => {
+      this.request.delete("/student/" + id).then(res => {
         if (res.data) {
           this.$message.success("succeed to delete");
           this.load();
@@ -182,7 +162,7 @@ export default {
     },
     delBatch() {
       let ids = this.multipleSelection.map(v => v.id);
-      this.request.post("/user/del/batch", ids).then(res => {
+      this.request.post("/student/del/batch", ids).then(res => {
         if (res.data) {
           this.$message.success("succeed to delete");
           this.load();
@@ -193,13 +173,12 @@ export default {
     },
 
     load() {    // 请求封装成方法
-      this.request.get("/user/page", {
+      this.request.get("/student/page", {
         params: {
           pageNum: this.pageNum,
           pageSize: this.pageSize,
-          username: this.username,
-          email: this.email,
-          address: this.address,
+          studentName: this.studentName,
+          institute: this.institute,
         }
       }).then(res => {
         console.log(res);
@@ -207,9 +186,6 @@ export default {
         this.total = res.data.total;
       })
 
-      this.request.get("/role").then(res => {
-        this.roles = res.data
-      })
     },
     handleSizeChange(pageSize) {
       this.pageSize = pageSize;
