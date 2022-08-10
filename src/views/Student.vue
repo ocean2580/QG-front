@@ -3,27 +3,27 @@
 
     <div style="margin: 10px 0">
       <!--    绑定输入框实现模糊搜索      -->
-      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入名称" v-model="studentName"></el-input>
-      <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="请输入学院" class="ml-5"
+      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="name" v-model="studentName"></el-input>
+      <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="institute" class="ml-5"
                 v-model="institute"></el-input>
-      <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
-      <el-button type="warning" @click="reset">重置</el-button>
+      <el-button class="ml-5" type="primary" @click="load">search</el-button>
+      <el-button type="warning" @click="reset">reset</el-button>
     </div>
 
     <div>
-      <el-button type="primary" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"
+      <el-button type="primary" @click="handleAdd">add<i class="el-icon-circle-plus-outline"
                                                         style="margin-left: 1px"></i></el-button>
       <!--  批量删除 -->
       <el-popconfirm
           class="ml-5"
-          confirm-button-text='好的'
-          cancel-button-text='我再想想'
+          confirm-button-text='ok'
+          cancel-button-text='next time'
           icon="el-icon-info"
           icon-color="red"
-          title="确定批量删除这些数据吗？"
+          title="Are you sure to delete these data in batch?"
           @confirm="delBatch"
       >
-        <el-button type="danger" slot="reference">批量删除<i class="el-icon-remove-outline"
+        <el-button type="danger" slot="reference">Batch delete<i class="el-icon-remove-outline"
                                                          style="margin-left: 1px"></i></el-button>
       </el-popconfirm>
 
@@ -35,13 +35,13 @@
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="40"></el-table-column>
-      <el-table-column prop="studentName" label="学生名" width="140"></el-table-column>
-      <el-table-column prop="institute" label="学院"></el-table-column>
-      <el-table-column prop="grade" label="年级" width="120"></el-table-column>
-      <el-table-column prop="studentClass" label="班级"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column prop="studentName" label="name" width="140"></el-table-column>
+      <el-table-column prop="institute" label="institute"></el-table-column>
+      <el-table-column prop="grade" label="graade" width="120"></el-table-column>
+      <el-table-column prop="studentClass" label="class"></el-table-column>
+      <el-table-column label="operation">
         <template slot-scope="scope">
-          <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
+          <el-button type="success" @click="handleEdit(scope.row)">edit <i class="el-icon-edit"></i></el-button>
 
           <el-popconfirm
               class="ml-5"
@@ -72,25 +72,25 @@
     </div>
 
     <!--        dialog -->
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="message" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
-        <el-form-item label="用户名">
+        <el-form-item label="name">
           <el-input v-model="form.studentName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="学院">
+        <el-form-item label="institute">
           <el-input v-model="form.institute" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="年级">
+        <el-form-item label="grade">
           <el-input v-model="form.grade" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="班级">
+        <el-form-item label="class">
           <el-input v-model="form.studentClass" autocomplete="off"></el-input>
         </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">cancel</el-button>
+        <el-button type="primary" @click="save">yes</el-button>
       </div>
     </el-dialog>
   </div>

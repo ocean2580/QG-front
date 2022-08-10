@@ -3,29 +3,29 @@
 
     <div style="margin: 10px 0">
       <!--    绑定输入框实现模糊搜索      -->
-      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入名称" v-model="username"></el-input>
-      <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="请输入邮箱" class="ml-5"
+      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="name" v-model="username"></el-input>
+      <el-input style="width: 200px" suffix-icon="el-icon-message" placeholder="email" class="ml-5"
                 v-model="email"></el-input>
-      <el-input style="width: 200px" suffix-icon="el-icon-position" placeholder="请输入地址" class="ml-5"
+      <el-input style="width: 200px" suffix-icon="el-icon-position" placeholder="address" class="ml-5"
                 v-model="address"></el-input>
-      <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
-      <el-button type="warning" @click="reset">重置</el-button>
+      <el-button class="ml-5" type="primary" @click="load">Search</el-button>
+      <el-button type="warning" @click="reset">Reset</el-button>
     </div>
 
     <div>
-      <el-button type="primary" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"
+      <el-button type="primary" @click="handleAdd">add<i class="el-icon-circle-plus-outline"
                                                         style="margin-left: 1px"></i></el-button>
       <!--  批量删除 -->
       <el-popconfirm
           class="ml-5"
-          confirm-button-text='好的'
-          cancel-button-text='我再想想'
+          confirm-button-text='ok'
+          cancel-button-text='next time'
           icon="el-icon-info"
           icon-color="red"
-          title="确定批量删除这些数据吗？"
+          title="Are you sure to delete these data in batch?"
           @confirm="delBatch"
       >
-        <el-button type="danger" slot="reference">批量删除<i class="el-icon-remove-outline"
+        <el-button type="danger" slot="reference">Batch delete<i class="el-icon-remove-outline"
                                                          style="margin-left: 1px"></i></el-button>
       </el-popconfirm>
 
@@ -33,9 +33,9 @@
                  accept="xlsx" style="display: inline-block"
                  :on-success="handleExcelImportSuccess"
       >
-        <el-button type="primary" class="ml-5">导入<i class="el-icon-bottom"></i></el-button>
+        <el-button type="primary" class="ml-5">import<i class="el-icon-bottom"></i></el-button>
       </el-upload>
-      <el-button type="primary" @click="exp" class="ml-5">导出<i class="el-icon-top"></i></el-button>
+      <el-button type="primary" @click="exp" class="ml-5">export<i class="el-icon-top"></i></el-button>
     </div>
 
     <!-- table  -->
@@ -43,26 +43,26 @@
                    @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="40"></el-table-column>
-      <el-table-column prop="username" label="开发者" width="140"></el-table-column>
-      <el-table-column prop="role" label="角色"></el-table-column>
-      <el-table-column prop="nickname" label="昵称" width="120"></el-table-column>
-      <el-table-column prop="email" label="邮箱"></el-table-column>
-      <el-table-column prop="phone" label="电话"></el-table-column>
-      <el-table-column prop="address" label="地址"></el-table-column>
-      <el-table-column label="操作">
+      <el-table-column prop="username" label="developer" width="140"></el-table-column>
+      <el-table-column prop="role" label="role"></el-table-column>
+      <el-table-column prop="nickname" label="nickname" width="120"></el-table-column>
+      <el-table-column prop="email" label="email"></el-table-column>
+      <el-table-column prop="phone" label="phone"></el-table-column>
+      <el-table-column prop="address" label="address"></el-table-column>
+      <el-table-column label="operation">
         <template slot-scope="scope">
-          <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
+          <el-button type="success" @click="handleEdit(scope.row)">edit <i class="el-icon-edit"></i></el-button>
 
           <el-popconfirm
-              class="ml-5"
-              confirm-button-text='好的'
-              cancel-button-text='我再想想'
+              style="margin-left: 2px;"
+              confirm-button-text='ok'
+              cancel-button-text='next time'
               icon="el-icon-info"
               icon-color="red"
-              title="确定删除吗？"
+              title="Ready to delete?"
               @confirm="del(scope.row.id)"
           >
-            <el-button type="danger" slot="reference">删除 <i class="el-icon-delete"></i></el-button>
+            <el-button type="danger" slot="reference">delete <i class="el-icon-delete"></i></el-button>
           </el-popconfirm>
 
         </template>
@@ -82,34 +82,34 @@
     </div>
 
     <!--        dialog -->
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="message" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
-        <el-form-item label="开发者">
+        <el-form-item label="developer">
           <el-input v-model="form.username" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="角色">
+        <el-form-item label="role">
           <!--    下拉框      -->
           <el-select clearable v-model="form.role" placeholder="role" style="width: 100%">
             <el-option v-for="item in roles" :key="item.name" :label="item.name" :value="item.flag">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="昵称">
+        <el-form-item label="nickname">
           <el-input v-model="form.nickname" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱">
+        <el-form-item label="email">
           <el-input v-model="form.email" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="电话">
+        <el-form-item label="phone">
           <el-input v-model="form.phone" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="地址">
+        <el-form-item label="address">
           <el-input v-model="form.address" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">cancel</el-button>
+        <el-button type="primary" @click="save">yes</el-button>
       </div>
     </el-dialog>
   </div>

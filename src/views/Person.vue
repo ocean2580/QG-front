@@ -11,23 +11,23 @@
         <img v-if="form.avatarUrl" :src="form.avatarUrl" class="avatar">
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
       </el-upload>
-      <el-form-item label="用户名">
+      <el-form-item label="username">
         <el-input v-model="form.username" disabled autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="昵称">
+      <el-form-item label="nickname">
         <el-input v-model="form.nickname" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="邮箱">
+      <el-form-item label="email">
         <el-input v-model="form.email" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="电话">
+      <el-form-item label="phone">
         <el-input v-model="form.phone" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="地址">
+      <el-form-item label="address">
         <el-input v-model="form.address" type="textarea" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button type="primary" @click="save">yes</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -48,7 +48,6 @@ export default {
     })
   },
   methods: {
-    //TODO 界面右上角头像实时刷新
     async getUser() {
       return (await this.request.get("/user/username/" + this.user.username)).data
     },

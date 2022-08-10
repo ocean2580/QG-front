@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <div style="margin: 200px auto; background-color: #fff; width: 350px; height: 300px; padding: 20px; border-radius: 10px">
-      <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>登 录</b></div>
+      <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>Login</b></div>
       <el-form :model="user" :rules="rules" ref="userForm">
         <el-form-item prop="username">
           <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-user" v-model="user.username"></el-input>
@@ -10,8 +10,8 @@
           <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-lock" show-password v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item style="margin: 10px 0; text-align: right">
-          <el-button type="primary" size="small"  autocomplete="off" @click="login">登录</el-button>
-          <el-button type="warning" size="small"  autocomplete="off" @click="$router.push('/register')">注册</el-button>
+          <el-button type="primary" size="small"  autocomplete="off" @click="login">login</el-button>
+          <el-button type="warning" size="small"  autocomplete="off" @click="$router.push('/register')">register</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -28,12 +28,12 @@ export default {
       user: {},
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { required: true, message: 'username', trigger: 'blur' },
+          { min: 3, max: 10, message: 'The length is between 3 and 5 characters', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+          { required: true, message: 'password', trigger: 'blur' },
+          { min: 1, max: 20, message: 'The length is between 1 and 20 characters', trigger: 'blur' }
         ],
       }
     }
@@ -50,7 +50,7 @@ export default {
               // 动态设置当前用户路由
               setRoutes()
               this.$router.push("/")
-              this.$message.success("登录成功")
+              this.$message.success("succeed to login")
             } else {
               this.$message.error(res.msg);
             }

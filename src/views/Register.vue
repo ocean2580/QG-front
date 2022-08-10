@@ -1,20 +1,20 @@
 <template>
   <div class="wrapper">
     <div style="margin: 100px auto; background-color: #fff; width: 350px; height: 400px; padding: 20px; border-radius: 10px">
-      <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>注 册</b></div>
+      <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>Register</b></div>
       <el-form :model="user" :rules="rules" ref="userForm">
         <el-form-item prop="username">
-          <el-input placeholder="请输入账号" size="medium" style="margin: 5px 0" prefix-icon="el-icon-user" v-model="user.username"></el-input>
+          <el-input placeholder="username" size="medium" style="margin: 5px 0" prefix-icon="el-icon-user" v-model="user.username"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input placeholder="请输入密码" size="medium" style="margin: 5px 0" prefix-icon="el-icon-lock" show-password v-model="user.password"></el-input>
+          <el-input placeholder="password" size="medium" style="margin: 5px 0" prefix-icon="el-icon-lock" show-password v-model="user.password"></el-input>
         </el-form-item>
         <el-form-item prop="confirmPassword">
-          <el-input placeholder="请确认密码" size="medium" style="margin: 5px 0" prefix-icon="el-icon-lock" show-password v-model="user.confirmPassword"></el-input>
+          <el-input placeholder="confirm password" size="medium" style="margin: 5px 0" prefix-icon="el-icon-lock" show-password v-model="user.confirmPassword"></el-input>
         </el-form-item>
         <el-form-item style="margin: 5px 0; text-align: right">
-          <el-button type="primary" size="small"  autocomplete="off" @click="login">注册</el-button>
-          <el-button type="warning" size="small"  autocomplete="off" @click="$router.push('/login')">返回登录</el-button>
+          <el-button type="primary" size="small"  autocomplete="off" @click="login">register</el-button>
+          <el-button type="warning" size="small"  autocomplete="off" @click="$router.push('/login')">to login</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -29,16 +29,16 @@ export default {
       user: {},
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { required: true, message: 'username is invalid', trigger: 'blur' },
+          { min: 3, max: 10, message: 'The length is between 3 and 5 characters', trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+          { required: true, message: 'password is invalid', trigger: 'blur' },
+          { min: 1, max: 20, message: 'The length is between 1 and 20 characters', trigger: 'blur' }
         ],
         confirmPassword: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 1, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+          { required: true, message: 'confirm is invalid', trigger: 'blur' },
+          { min: 1, max: 20, message: 'The length is between 1 and 20 characters', trigger: 'blur' }
         ],
       }
     }

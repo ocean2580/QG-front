@@ -48,7 +48,7 @@ export const setRoutes = () => {
                 name: 'Manage',
                 redirect: "/home",
                 component: () => import('../views/Manage.vue'),
-                children: [{path: 'person', name: '个人信息', component: ()=> import('../views/Person.vue')},
+                children: [{path: 'person', name: 'Profile', component: ()=> import('../views/Person.vue')},
                     // {path: 'password', name: '修改密码', componet: ()=> import('../views/Password.vue')},
                 ]
             }

@@ -8,7 +8,7 @@
   >
     <div style="height: 60px; line-height: 60px; text-align: center">
       <img src="../assets/fm.png" alt="" style="width: 18px; position: relative; top: 1.5px">
-      <b style="color: white; margin-left: 5px;" v-show="logoTextShow">后台管理系统</b>
+      <b style="color: white; margin-left: 5px;" v-show="logoTextShow">Backstage</b>
     </div>
 
     <!--  index跳转  -->
@@ -61,5 +61,8 @@ export default {
 </script>
 
 <style scoped>
+.el-menu--collapse span {
+  visibility: hidden;
+}
 
 </style>

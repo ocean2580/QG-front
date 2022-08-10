@@ -3,28 +3,28 @@
 
     <div style="margin: 10px 0">
       <!--    绑定输入框实现模糊搜索      -->
-      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入名称" v-model="goodsName" class="ml-5"></el-input>
-      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入丢失地点" v-model="lostPosition" class="ml-5"></el-input>
-      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="请输入领取地点" v-model="claimPosition" class="ml-5"></el-input>
+      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="name" v-model="goodsName" class="ml-5"></el-input>
+      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="lost position" v-model="lostPosition" class="ml-5"></el-input>
+      <el-input style="width: 200px" suffix-icon="el-icon-search" placeholder="claim position" v-model="claimPosition" class="ml-5"></el-input>
 
-      <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
-      <el-button type="warning" @click="reset">重置</el-button>
+      <el-button class="ml-5" type="primary" @click="load">search</el-button>
+      <el-button type="warning" @click="reset">reset</el-button>
     </div>
 
     <div>
-      <el-button type="primary" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"
+      <el-button type="primary" @click="handleAdd">add<i class="el-icon-circle-plus-outline"
                                                         style="margin-left: 1px"></i></el-button>
       <!--  批量删除 -->
       <el-popconfirm
           class="ml-5"
-          confirm-button-text='好的'
-          cancel-button-text='我再想想'
+          confirm-button-text='ok'
+          cancel-button-text='next time'
           icon="el-icon-info"
           icon-color="red"
-          title="确定批量删除这些数据吗？"
+          title="Are you sure to delete these data in batch?"
           @confirm="delBatch"
       >
-        <el-button type="danger" slot="reference">批量删除<i class="el-icon-remove-outline"
+        <el-button type="danger" slot="reference">Batch delete<i class="el-icon-remove-outline"
                                                          style="margin-left: 1px"></i></el-button>
       </el-popconfirm>
 
@@ -38,26 +38,26 @@
 
       <!--  与 entity类 字段名一致    -->
       <el-table-column prop="id" label="ID" width="40"></el-table-column>
-      <el-table-column prop="goodsName" label="名称" width="140"></el-table-column>
-      <el-table-column prop="lostPosition" label="丢失地点"></el-table-column>
-      <el-table-column prop="claimPosition" label="领取地点" width="120"></el-table-column>
-      <el-table-column prop="description" label="描述"></el-table-column>
-      <el-table-column prop="lostDate" label="丢失时间"></el-table-column>
+      <el-table-column prop="goodsName" label="name" width="140"></el-table-column>
+      <el-table-column prop="lostPosition" label="lost position"></el-table-column>
+      <el-table-column prop="claimPosition" label="claim position"></el-table-column>
+      <el-table-column prop="description" label="description"></el-table-column>
+      <el-table-column prop="lostDate" label="lost date"></el-table-column>
 
-      <el-table-column label="操作">
+      <el-table-column label="operation">
         <template slot-scope="scope">
-          <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
+          <el-button type="success" @click="handleEdit(scope.row)">edit <i class="el-icon-edit"></i></el-button>
 
           <el-popconfirm
               class="ml-5"
-              confirm-button-text='好的'
-              cancel-button-text='我再想想'
+              confirm-button-text='ok'
+              cancel-button-text='next time'
               icon="el-icon-info"
               icon-color="red"
-              title="确定删除吗？"
+              title="Ready to delete?"
               @confirm="del(scope.row.id)"
           >
-            <el-button type="danger" slot="reference">删除 <i class="el-icon-delete"></i></el-button>
+            <el-button type="danger" slot="reference">delete <i class="el-icon-delete"></i></el-button>
           </el-popconfirm>
 
         </template>
@@ -77,25 +77,25 @@
     </div>
 
     <!--        dialog ~ form       -->
-    <el-dialog title="收货地址" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="message" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
-        <el-form-item label="名称">
+        <el-form-item label="name">
           <el-input v-model="form.goodsName" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="丢失地点">
+        <el-form-item label="lost pos">
           <el-input v-model="form.lostPosition" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="领取地点">
+        <el-form-item label="claim pos">
           <el-input v-model="form.claimPosition" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="描述">
+        <el-form-item label="description">
           <el-input v-model="form.description" autocomplete="off"></el-input>
         </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">cancel</el-button>
+        <el-button type="primary" @click="save">yes</el-button>
       </div>
     </el-dialog>
   </div>

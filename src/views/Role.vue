@@ -1,23 +1,23 @@
 <template>
   <div>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入名称" suffix-icon="el-icon-search" v-model="name"></el-input>
-      <el-button class="ml-5" type="primary" @click="load">搜索</el-button>
-      <el-button type="warning" @click="reset">重置</el-button>
+      <el-input style="width: 200px" placeholder="name" suffix-icon="el-icon-search" v-model="name"></el-input>
+      <el-button class="ml-5" type="primary" @click="load">search</el-button>
+      <el-button type="warning" @click="reset">reset</el-button>
     </div>
 
     <div style="margin: 10px 0">
-      <el-button type="primary" @click="handleAdd">新增 <i class="el-icon-circle-plus-outline"></i></el-button>
+      <el-button type="primary" @click="handleAdd">add <i class="el-icon-circle-plus-outline"></i></el-button>
       <el-popconfirm
           class="ml-5"
-          confirm-button-text='确定'
-          cancel-button-text='我再想想'
+          confirm-button-text='ok'
+          cancel-button-text='next time'
           icon="el-icon-info"
           icon-color="red"
-          title="您确定批量删除这些数据吗？"
+          title="Are you sure to delete these data in batch?"
           @confirm="delBatch"
       >
-        <el-button type="danger" slot="reference">批量删除 <i class="el-icon-remove-outline"></i></el-button>
+        <el-button type="danger" slot="reference">Batch delete <i class="el-icon-remove-outline"></i></el-button>
       </el-popconfirm>
     </div>
 
@@ -26,23 +26,23 @@
               @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column prop="id" label="ID" width="80"></el-table-column>
-      <el-table-column prop="name" label="名称"></el-table-column>
-      <el-table-column prop="flag" label="唯一标识"></el-table-column>
-      <el-table-column prop="description" label="描述"></el-table-column>
-      <el-table-column label="操作" width="280" align="center">
+      <el-table-column prop="name" label="name"></el-table-column>
+      <el-table-column prop="flag" label="flag"></el-table-column>
+      <el-table-column prop="description" label="description"></el-table-column>
+      <el-table-column label="operation" width="280" align="center">
         <template slot-scope="scope">
-          <el-button type="info" @click="selectMenu(scope.row)">分配菜单 <i class="el-icon-menu"></i></el-button>
-          <el-button type="success" @click="handleEdit(scope.row)">编辑 <i class="el-icon-edit"></i></el-button>
+          <el-button type="info" @click="selectMenu(scope.row)">assign <i class="el-icon-menu"></i></el-button>
+          <el-button type="success" @click="handleEdit(scope.row)">edit <i class="el-icon-edit"></i></el-button>
           <el-popconfirm
               class="ml-5"
-              confirm-button-text='确定'
-              cancel-button-text='我再想想'
+              confirm-button-text='ok'
+              cancel-button-text='next time'
               icon="el-icon-info"
               icon-color="red"
-              title="您确定删除吗？"
+              title="Ready to delete?"
               @confirm="del(scope.row.id)"
           >
-            <el-button type="danger" slot="reference">删除 <i class="el-icon-remove-outline"></i></el-button>
+            <el-button type="danger" slot="reference">delete <i class="el-icon-remove-outline"></i></el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -60,26 +60,26 @@
     </div>
 
     <!--  dialog  -->
-    <el-dialog title="角色信息" :visible.sync="dialogFormVisible" width="30%">
+    <el-dialog title="message" :visible.sync="dialogFormVisible" width="30%">
       <el-form label-width="80px" size="small">
-        <el-form-item label="名称">
+        <el-form-item label="name">
           <el-input v-model="form.name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="唯一标识">
+        <el-form-item label="flag">
           <el-input v-model="form.flag" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="描述">
+        <el-form-item label="description">
           <el-input v-model="form.description" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <!--    insert  -->
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogFormVisible = false">cancel</el-button>
+        <el-button type="primary" @click="save">yes</el-button>
       </div>
     </el-dialog>
 
-    <el-dialog title="菜单分配" :visible.sync="menuDialogVis" width="30%">
+    <el-dialog title="assign" :visible.sync="menuDialogVis" width="30%">
       <el-tree
           :props="props"
           :data="menuData"
@@ -94,8 +94,8 @@
       </el-tree>
       <div slot="footer" class="dialog-footer">
         <!--  menu      -->
-        <el-button @click="menuDialogVis = false">取 消</el-button>
-        <el-button type="primary" @click="saveRoleMenu">确 定</el-button>
+        <el-button @click="menuDialogVis = false">cancel</el-button>
+        <el-button type="primary" @click="saveRoleMenu">yes</el-button>
       </div>
     </el-dialog>
   </div>
@@ -150,18 +150,18 @@ export default {
     save() {
       this.request.post("/role", this.form).then(res => {
         if (res.code === '200') {
-          this.$message.success("保存成功")
+          this.$message.success("succeed to save")
           this.dialogFormVisible = false
           this.load()
         } else {
-          this.$message.error("保存失败")
+          this.$message.error("fail to save")
         }
       })
     },
     saveRoleMenu() {
       this.request.post("/role/roleMenu/" + this.roleId, this.$refs.tree.getCheckedKeys()).then(res => {
         if (res.code === '200') {
-          this.$message.success("绑定成功")
+          this.$message.success("succeed to bind")
           this.menuDialogVis = false
 
           // 操作管理员角色后需要重新登录
@@ -185,10 +185,10 @@ export default {
     del(id) {
       this.request.delete("/role/" + id).then(res => {
         if (res.code === '200') {
-          this.$message.success("删除成功")
+          this.$message.success("succeed to delete")
           this.load()
         } else {
-          this.$message.error("删除失败")
+          this.$message.error("fail to delete")
         }
       })
     },
@@ -200,10 +200,10 @@ export default {
       let ids = this.multipleSelection.map(v => v.id)  // [{}, {}, {}] => [1,2,3]
       this.request.post("/role/del/batch", ids).then(res => {
         if (res.code === '200') {
-          this.$message.success("批量删除成功")
+          this.$message.success("success")
           this.load()
         } else {
-          this.$message.error("批量删除失败")
+          this.$message.error("fail")
         }
       })
     },

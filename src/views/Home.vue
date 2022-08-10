@@ -4,7 +4,7 @@
 
       <el-col :span="6">
         <el-card style="color: #409eff">
-          <div><i class="el-icon-user-solid"/> 用户总数</div>
+          <div><i class="el-icon-user-solid"/> user</div>
           <div style="padding: 10px 0; text-align: center; font-weight: bold">
             100
           </div>
@@ -13,7 +13,7 @@
 
       <el-col :span="6">
         <el-card style="color: #f56c6c">
-          <div><i class="el-icon-money"/> 销售总额</div>
+          <div><i class="el-icon-money"/> sale</div>
           <div style="padding: 10px 0; text-align: center; font-weight: bold">
             $ 100,000,000
           </div>
@@ -22,14 +22,14 @@
 
       <el-col :span="6">
         <el-card style="color: #67c23a">
-          <div><i class="el-icon-bank-card"/> 收益总额</div>
+          <div><i class="el-icon-bank-card"/> profit</div>
           <div style="padding: 10px 0; text-align: center; font-weight: bold">$ 90,000,000</div>
         </el-card>
       </el-col>
 
       <el-col :span="6">
         <el-card style="color: #e6a23c">
-          <div><i class="el-icon-s-shop"/> 门店总数</div>
+          <div><i class="el-icon-s-shop"/> store</div>
           <div style="padding: 10px 0; text-align: center; font-weight: bold">32</div>
         </el-card>
       </el-col>
