@@ -1,4 +1,16 @@
-# Vue基础
+
+
+# Vue 渐进式JS框架
+
+- View (html,css,templates) 
+
+- ViewModel (JS,Runtimes,Compiler)  ==DOM监听，数据绑定==
+
+- Model (PJSO)
+
+
+
+
 
 example：
 
@@ -364,6 +376,8 @@ https://cn.vuejs.org/v2/api/#v-on
 ```html
 <div id="app">
       <input type="text" v-model="message"></input>
+	  <p>{{message}}</p>
+	  <textarea v-model="message"></textarea>
  </div>
 
 <script>
@@ -386,9 +400,53 @@ https://cn.vuejs.org/v2/api/#v-on
 
 
 
+## Componet 可重复使用的模板
+
+vue-demo\src\components\Content.vue
+
+```vue
+<template>
+  <div>Content</div>
+</template>
+
+<script>
+  export default { name: "Content" };
+</script>
+
+<style></style>
+```
 
 
-# Axios
+
+## vue-demo 创建
+
+1.对应目录cmd进入
+
+2.创建
+
+```
+vue init webpack vue-demo
+```
+
+3.顺序执行
+
+![image-20220813103430742](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220813103430742.png)
+
+4.vue-router引入
+
+```
+npm install vue-router --save-dev	
+```
+
+```js
+import VueRouter from "vue-router";
+
+Vue.use(VueRouter);
+```
+
+
+
+# Axios 前端通信框架
 
 ```html
 
