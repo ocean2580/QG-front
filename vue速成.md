@@ -10,8 +10,6 @@
 
 
 
-
-
 example：
 
 ```html
@@ -402,46 +400,150 @@ https://cn.vuejs.org/v2/api/#v-on
 
 ## Componet 可重复使用的模板
 
-vue-demo\src\components\Content.vue
+0.配置
+
+main.js
+
+```js
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+
+Vue.config.productionTip = false;
+Vue.use(ElementUI,{size: "small"});
+
+new Vue({
+  router,
+  render: (h) => h(App),
+}).$mount("#app");
+
+```
+
+
+
+1.新建component
+
+/src/components/Test.vue
 
 ```vue
 <template>
-  <div>Content</div>
+	<div>{{a}}</div>
 </template>
 
 <script>
-  export default { name: "Content" };
+	export default {
+		name: "Test",
+		props: {
+			a: String
+		}
+	}
 </script>
-
-<style></style>
 ```
+
+
+
+2.view中引入使用
+
+/src/views/HelloWorld.vue
+
+```vue
+<template>
+  <div class="home">
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+	<Test a="hhhh"/>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'
+import Test from '../components/Test.vue'
+
+export default {
+  name: 'HomeView',
+  components: {
+    HelloWorld,
+	Test
+  }
+}
+</script>
+```
+
+
+
+3.注册view
+
+/src/router/index.js
+
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
+  ...
+]
+
+...
+
+```
+
+
 
 
 
 ## vue-demo 创建
 
-1.对应目录cmd进入
+1.主目录cmd入
 
-2.创建
-
-```
-vue init webpack vue-demo
+```shell
+vue create vue-demo
 ```
 
-3.顺序执行
+2.space选择
 
-![image-20220813103430742](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220813103430742.png)
+![image-20220813154749010](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220813154749010.png)
 
-4.vue-router引入
 
+
+3.启动
+
+```shell
+cd vue-demo
+npm run serve
 ```
-npm install vue-router --save-dev	
+
+
+
+4.安装element-ui
+
+```shell
+npm i element-ui -S
 ```
+
+package.json会多出东西
+
+
+
+5.引入element-ui
+
+main.js中：
 
 ```js
-import VueRouter from "vue-router";
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
-Vue.use(VueRouter);
+Vue.use(ElementUI,{size: "small"});
 ```
 
 
