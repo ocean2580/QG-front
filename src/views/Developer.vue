@@ -29,7 +29,7 @@
                                                          style="margin-left: 1px"></i></el-button>
       </el-popconfirm>
 
-      <el-upload action="http://116.205.186.165:9090/user/import" :show-file-list="false"
+      <el-upload action="http://116.205.186.165:8080/user/import" :show-file-list="false"
                  accept="xlsx" style="display: inline-block"
                  :on-success="handleExcelImportSuccess"
       >
@@ -222,7 +222,7 @@ export default {
 
     // 导出
     exp() {
-      window.open("http://116.205.186.165:9090/user/export");
+      window.open("http://116.205.186.165:8080/user/export");
     },
     handleExcelImportSuccess() {
       this.$message.success("succeed to import");
