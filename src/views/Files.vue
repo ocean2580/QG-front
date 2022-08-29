@@ -153,6 +153,7 @@ export default {
       this.load()
     },
     download(url) {
+      url.replace("9090","8080")
       window.open(url)
     }
   }
